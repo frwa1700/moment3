@@ -16,6 +16,14 @@
   "author": "Fredrik Waldfelt",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "browser-sync": "^2.24.7",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-inject": "^4.3.2",
+    "gulp-newer": "^1.4.0",
+    "run-sequence": "^2.2.1"
   }
 }
