@@ -56,7 +56,8 @@ Tömmer först build-katalogen, för att undvika äldre filer, för att sedan ko
 8. browser-sync - Webserver som körs för att kunna ladda om sidor vid ändringar.
 9. run-sequence - Köra "tasks" i sekvenser.
 10. del - Radera filer.
-
+11. gulp-sass - Kompilerar och komrpimerar SCSS-filer (SASS) till CSS.
+12. gulp-sourcemaps - Skapar sourcemaps av SCSS-filer för att enklare identifiera källfiler i kompilerade CSS-filer.
 
 ### Nya tasks i Moment 3
 #### sass:copy
