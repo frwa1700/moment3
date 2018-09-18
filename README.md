@@ -11,14 +11,14 @@ Det svåra i denna uppgiften var att få med en if/else-sats i den webplats jag 
 En enkel struktur för att använda gulp (och därigenom node.js) för att skapa en enkel html-sida.
 Kompilerar scss, komprimerar bilder och injicerar JavaScript/CSS i index.html
 
-### Developer-läge
+#### Developer-läge
 Startas med `gulp` eller `gulp start-dev`
 Tömmer först dev-katalogen för att inte innehålla gamla utdaterade utvecklingsfiler.
 Kompilerar scss till css, komprimerar bilder och injicerar JS-/CSS-filer till index.html från src-katalogen.
 Allt detta kopieras sedan till dev-katalogen.
 Kollar efter förändringar i källkods-filerna och uppdaterar dev-filer samt browser vid förändringar.
 
-### Developer-läge
+#### Developer-läge
 Startas med `gulp build`
 Kompilerar samt komprimerar scss till css, komprimerar bilder och injicerar JS-/CSS-filer till index.html från src-katalogen.
 Rensar även html och JavaScript från onödig kod.
