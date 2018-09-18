@@ -1,9 +1,30 @@
 # Moment 3 i kursen DT173G - Webbutveckling III
 
 ## Syfte
-Syftet med att skapa automatiserings-processer är att det snabbar upp och förenklar utveckling. Detta då man slipper göra många moment manuellt och det går enkelt att dela upp utvecklingen på flera filer för att sedan slå ihop dessa.
+Det finns flera syften med att använda CSS-preprocessorer. De största fördelarna jag ser är återanvändning av kod (exempelvis med @extend, @import) och användandet variabler i scss-koden. Även mixins ser jag användingsområde för då man kan återanvända kod som ska användas på flera ställen.
+De inbyggda färfunktionerna (bland annat darken och lighten) ser jag också stor nytta med i andra projekt.
+
+Det svåra i denna uppgiften var att få med en if/else-sats i den webplats jag skapat för detta moment. Så bara för att visa att jag kan lägga in den skapade jag en väldigt enkel if/else-sats.
+`Rad 308` skapar CSS om `$slideshow` är satt till true (if), och `rad 365` döljer annars slideshow-elementet (else).
 
 ## Beskrivning
+En enkel struktur för att använda gulp (och därigenom node.js) för att skapa en enkel html-sida.
+Kompilerar scss, komprimerar bilder och injicerar JavaScript/CSS i index.html
+
+### Developer-läge
+Startas med `gulp` eller `gulp start-dev`
+Tömmer först dev-katalogen för att inte innehålla gamla utdaterade utvecklingsfiler.
+Kompilerar scss till css, komprimerar bilder och injicerar JS-/CSS-filer till index.html från src-katalogen.
+Allt detta kopieras sedan till dev-katalogen.
+Kollar efter förändringar i källkods-filerna och uppdaterar dev-filer samt browser vid förändringar.
+
+### Developer-läge
+Startas med `gulp build`
+Kompilerar samt komprimerar scss till css, komprimerar bilder och injicerar JS-/CSS-filer till index.html från src-katalogen.
+Rensar även html och JavaScript från onödig kod.
+
+Tömmer först build-katalogen, för att undvika äldre filer, för att sedan kopiera de bearbetade filerna dit för publicering.
+
 ## Katalogstruktur
 ````
 .
