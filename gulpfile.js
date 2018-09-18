@@ -1,7 +1,7 @@
 // Course: Webbutveckling III HT18
-// Assignment: Moment 2
+// Assignment: Moment 3
 // Author: Fredrik Waldfelt - frwa1700
-// Date: 2018-09-05
+// Date: 2018-09-18
 // Filename: gulpfile.js
 // Description: Gulp configuration file
 var 
@@ -16,7 +16,9 @@ var
     uglify = require('gulp-uglify'),
     browserSync = require('browser-sync').create(),
     runSequence = require('run-sequence'),
-    del = require('del');
+    del = require('del'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps');
 
     // Setup folders
     folder = {
@@ -27,6 +29,7 @@ var
         srcHTML: 'src/html/**/*',
         srcJS: 'src/js/**/*',
         srcImages: 'src/images/', // Only take images in one directory
+        srcSass: 'src/scss/**/*',
 
         // Testing-directories
         dev: 'dev/',
@@ -50,6 +53,32 @@ var
 
     // Create gulp tasks
 
+    /* Sass tasks */
+    gulp.task('sass:copy', function(){
+        console.log('found sass');
+        var
+            out = folder.devCSS,
+            sassVar = gulp.src(folder.srcSass + '.scss')
+                .pipe(sourcemaps.init())
+                .pipe(sass().on('error', sass.logError))
+                .pipe(sourcemaps.write());
+                //.pipe(concat("style.min.css"));
+                
+        return sassVar.pipe(gulp.dest(out));
+    })
+
+    gulp.task('sass:build', function(){
+        console.log('found sass');
+        var
+            out = folder.build.buildCSS,
+            sassVar = gulp.src(folder.srcSass + '.scss')
+                .pipe(sourcemaps.init())
+                .pipe(sass().on('error', sass.logError))
+                .pipe(sourcemaps.write())
+                .pipe(concat("style.css"));
+                
+        return sassVar.pipe(gulp.dest(out));
+    })
     // Task to copy compressed and move images to dev
     gulp.task('images:copy', function(){
         var
@@ -129,7 +158,7 @@ var
     gulp.task('js:copy', function(){
         var
             out = folder.devJS,
-            js = gulp.src(folder.srcJS + '*.js')
+            js = gulp.src(folder.srcJS + '.js')
                 .pipe(newer(out));
         return js.pipe(gulp.dest(out));
     });
@@ -146,7 +175,7 @@ var
     });
 
     // Task to create page by inserting CSS, JS
-    gulp.task('pages:create',['images:copy','fonts:copy', 'css:copy','js:copy','html:copy'], function(){
+    gulp.task('pages:create',['images:copy','fonts:copy', 'css:copy','sass:copy','js:copy','html:copy'], function(){
         var
             out = folder.devHTML,
             css = gulp.src(folder.devCSS + '*.css', {read: false} ),
@@ -159,7 +188,7 @@ var
         return page.pipe(gulp.dest(out)); // Save file
     });
 
-    gulp.task('pages:build',['images:build', 'js:build', 'fonts:build', 'css:build'], function(){
+    gulp.task('pages:build',['images:build', 'js:build', 'fonts:build', 'sass:build', 'css:build'], function(){
         console.log('Building pages');
         var
             out = folder.build.dir,
@@ -176,6 +205,7 @@ var
 
     // Deletes dev-directory
     gulp.task('del:dev', function(){
+        console.log('Deleting dev-files to copy clean files from src.');
         return del(folder.dev);
     })
 
@@ -196,7 +226,10 @@ var
         gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
         gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
         gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
+        gulp.watch(folder.srcSass + '.scss', ['sass:copy']);
         gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
+
+        
     })
     
     /**

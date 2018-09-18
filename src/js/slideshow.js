@@ -1,5 +1,5 @@
 // Course: Webbutveckling III - DT173G
-// Assignment: Moment 2
+// Assignment: Moment 3
 // Author: Fredrik Waldfelt - frwa1700
 // Date: 2018-09-05
 // Filename: script.js
