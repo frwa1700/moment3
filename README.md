@@ -37,8 +37,36 @@ Syftet med att skapa automatiserings-processer är att det snabbar upp och före
 10. del - Radera filer.
 
 
+### Nya tasks i Moment 3
+#### sass:copy
+Kompilerar **SCSS-fierl** till en CSS-fil,  från _källkods-filer_ (**folder.srcSass**) till _utvecklings-filer_ (**folder.devCSS**).
 
-### Tasks
+#### sass:build
+Kompilerar och komprimerar **SCSS-filer** til en CSS-fil, från _källkods-filer_ (**folder.srcSass**) till _färdiga filer (**folder.build.buildImages**).
+
+### Uppdatera tasks från Moment 2
+#### pages:create
+Kör uppgifterna: `images:copy`, `js:copy`, `fonts:copy`, `css:copy`, `sass:copy`<br>
+Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
+
+#### pages:build
+Kör uppgifterna: `images:build`, `js:build`, `fonts:build`, `css:build`, `sass:build`<br>
+Efter de uppgifterna injiceras CSS- och JS-filer innan HTML-filerna rensas från bl.a. kommenterer.
+Filerna sparas till _färdiga filer_ (**folder.build.dir**).
+
+#### start-watchers
+Skapar watches för att uppdatea automatiskt vid filändringar.
+````
+    gulp.watch(folder.srcHTML + '.html', ['pages:create']); // Copy new html/css/js/images and injects css/js into html-files
+    gulp.watch(folder.srcCss + '.css', ['css:copy']); // Concat and copies CSS-files a
+    gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
+    gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
+    gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
+    gulp.watch(folder.srcSass + '.scss', ['sass:copy']); // Checks for changes in scss-files and compiles them
+    gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
+````
+
+### Oförändrade tasks från Moment 2
 #### start-dev
 Default-uppgift som körs när enbart `gulp` anges.<br>
 Kör uppgifterna `del:dev`, `pages:create`, `start-server`, `start-watchers`<br>
@@ -52,7 +80,7 @@ Kör uppgifterna: `pages:build`, `del:dev`
 Kopierar och komprimerar **nya/ändrade**  bilder från _källkods-filer_ (**folder.srcImages**) till _utvecklings-filer_ (**folder.devImages**).
 
 #### image:build
-Kopierar och komprimerar **nya/ändrade** bilder från _källkods-filer_ (*folder.srcImages*) till _färdiga filer_ (**folder.build.buildImages**).
+Kopierar och komprimerar **nya/ändrade** bilder från _källkods-filer_ (**folder.srcImages**) till _färdiga filer_ (**folder.build.buildImages**).
 
 #### html:copy
 Kopierar **nya/ändrade**  HTML-filer från _källkods-filer_ (**folder.srcHTML**) till _utvecklings-filer_ (**folder.devHTML**).
@@ -78,29 +106,9 @@ Kopierar **nya/ändrade** JavaScript från _källkods-filer_ (**folder.srcJS**) 
 Kopierar och slår ihop JavaScript från _källkods-filer_ (**folder.srcJS**) till _färdiga filer_ (**folder.build.buildJS**).
 Den ihopslagna JS-filens namn: `script.js`<br>
 
-#### pages:create
-Kör uppgifterna: `images:copy`, `js:copy`, `fonts:copy`, `css:copy`<br>
-Efter det injiceras Styleshhet och JavaScript i alla HTML-filer.
-
-#### pages:build
-Kör uppgifterna: `images:build`, `js:build`, `fonts:build`, `css:build`<br>
-Efter de uppgifterna injiceras CSS- och JS-filer innan HTML-filerna rensas från bl.a. kommenterer.
-Filerna sparas till _färdiga filer_ (**folder.build.dir**).
-
 #### del:dev
 Raderar **alla** _utvecklings-filer_ (**folder.devCSS**).
 Anänds innan utvecklings-läge startas för att säkerställa att inga gamla filer finns kvar.
 
 #### start-server
 Startar den inbygggda webbservern `browserSync`<br>
-
-#### start-watchers
-Skapar watches för att uppdatea automatiskt vid filändringar.
-```
-    gulp.watch(folder.srcHTML + '.html', ['pages:create']); // Copy new html/css/js/images and injects css/js into html-files
-    gulp.watch(folder.srcCss + '.css', ['css:copy']); // Concat and copies CSS-files a
-    gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
-    gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
-    gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
-    gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
-````

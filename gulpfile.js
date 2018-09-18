@@ -62,7 +62,6 @@ var
                 .pipe(sourcemaps.init())
                 .pipe(sass().on('error', sass.logError))
                 .pipe(sourcemaps.write());
-                //.pipe(concat("style.min.css"));
                 
         return sassVar.pipe(gulp.dest(out));
     })
@@ -73,9 +72,9 @@ var
             out = folder.build.buildCSS,
             sassVar = gulp.src(folder.srcSass + '.scss')
                 .pipe(sourcemaps.init())
-                .pipe(sass().on('error', sass.logError))
+                .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError)) // Compress file
                 .pipe(sourcemaps.write())
-                .pipe(concat("style.css"));
+                .pipe(concat(folder.build.nameCSS + '.min.css'));
                 
         return sassVar.pipe(gulp.dest(out));
     })
@@ -226,7 +225,7 @@ var
         gulp.watch(folder.srcFonts, ['fonts:copy']); // Copy fonts to dev
         gulp.watch(folder.srcJS + '.js', ['js:copy']); //Copies JS-files
         gulp.watch(folder.srcImages + '**/*.{jpg,jpeg,png,svg,gif}', ['images:copy']); // Copies images
-        gulp.watch(folder.srcSass + '.scss', ['sass:copy']);
+        gulp.watch(folder.srcSass + '.scss', ['sass:copy']); // Checks for changes in scss-files and compiles them
         gulp.watch(folder.dev + '**/*', browserSync.reload); // Reload browser when files changes
 
         
